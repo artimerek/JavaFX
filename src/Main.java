@@ -1,13 +1,18 @@
 import javafx.application.Application;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.*;
 import javafx.scene.control.Label; // <- important for get child
 import java.awt.*;
+import javafx.scene.web.*;
 
 public class Main extends  Application {
 
@@ -19,41 +24,43 @@ public class Main extends  Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        stage.setTitle("First App");
-        stage.show();
+       stage.setTitle("Obrazek");
+       stage.setWidth(300);
+       stage.setHeight(500);
 
-        Stage stage2 = new Stage();
-        stage2.setTitle("Second app");
-        stage2.setWidth(400);
-        stage2.setHeight(300);
-
-        stage2.setX(50);
-        stage2.setY(100);
-
-        VBox parent = new VBox();
-
-        Label label1 = new Label("This is label");
-        Label label2 = new Label("Second label");
-        parent.getChildren().addAll(label1,label2);
-
-        Scene scene1 = new Scene(parent);
-        scene1.setCursor(Cursor.CROSSHAIR);
-        stage2.setScene(scene1);
+       Stage stage1 = new Stage();
+       stage1.setTitle("ObrazekLabel");
+       stage1.setWidth(300);
+       stage1.setHeight(500);
 
 
-        stage2.show();
 
-        /*
-        Stage newWindow = new Stage();
-        newWindow.initModality(Modality.APPLICATION_MODAL);
-        newWindow.show();
-        */
 
-        Stage newWindow1 = new Stage();
-        newWindow1.initStyle(StageStyle.DECORATED);
-        newWindow1.initOwner(stage2);
-        newWindow1.initModality(Modality.WINDOW_MODAL);
-        newWindow1.show();
+       //obrazek z napisem
+       VBox root1 = new VBox();
+       ImageView image1 = new ImageView("https://upload.wikimedia.org/wikipedia/commons/d/d6/AndrzejGrabowski.jpg");
+       Label label1 = new Label("This is label");
+       Label label2 = new Label("Ziemniaki");
+       label2.setTextFill(Color.web("#34eb8f"));
+       label2.setFont(new Font("Cambria",45));
+       root1.getChildren().addAll(label1,image1,label2);
+       label2.setRotate(45);
+
+
+       //sam obrazek
+       VBox root = new VBox();
+       Image image = new Image("https://upload.wikimedia.org/wikipedia/commons/d/d6/AndrzejGrabowski.jpg");
+       ImageView imageView = new ImageView(image);
+       root.getChildren().addAll(imageView);
+
+
+       Scene scene = new Scene(root);
+       Scene scene2 = new Scene(root1);
+
+       stage.setScene(scene);
+       stage1.setScene(scene2);
+       stage.show();
+       stage1.show();
 
     }
 
