@@ -1,7 +1,7 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -18,7 +18,6 @@ public class Main extends  Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-      //Menu
 
         stage.setTitle("Buttons");
         stage.setHeight(500);
@@ -26,30 +25,18 @@ public class Main extends  Application {
 
         VBox root = new VBox();
 
-        MenuItem item = new MenuItem("Ziemniak");
-        MenuItem item1 = new MenuItem("Kabel");
-        MenuItem item2 = new MenuItem("Cukier");
-        MenuItem item3 = new MenuItem("Pomidor");
+        ToggleButton button = new ToggleButton("Blue");
+        ToggleButton button2 = new ToggleButton("Red");
+        ToggleButton button3 = new ToggleButton("Yellow");
+        ToggleGroup toggleGroup = new ToggleGroup();
+        button.setToggleGroup(toggleGroup);
+        button2.setToggleGroup(toggleGroup);
+        button3.setToggleGroup(toggleGroup);
 
-        MenuButton menuButton = new MenuButton("Wybierz jedzonko",null,item,item1,item2,item3);
-        Label food = new Label("Nie wybrano żarcia");
+        RadioButton radioButton = new RadioButton("Pomarańczowy");
+        RadioButton radioButton1 = new RadioButton("Fioletowy");
 
-        item.setOnAction(e -> {
-            food.setText("Ziemniak");
-        });
-        item1.setOnAction(e -> {
-            food.setText("Kabel");
-        });
-        item2.setOnAction(e -> {
-            food.setText("Cukier");
-        });
-        item3.setOnAction(e -> {
-            food.setText("Pomidor");
-        });
-
-
-
-        root.getChildren().addAll(menuButton,food);
+        root.getChildren().addAll(button,button2,button3,radioButton,radioButton1);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
