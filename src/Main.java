@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -22,25 +23,29 @@ public class Main extends  Application {
     public void start(Stage stage) throws Exception {
 
 
-        stage.setTitle("Buttons");
-        stage.setHeight(500);
-        stage.setWidth(500);
+        stage.setTitle("BordePane");
+        stage.setWidth(400);
+        stage.setHeight(400);
 
-        HBox root = new HBox();
+        BorderPane root = new BorderPane();
 
+        root.setTop(new TextField("Góra"));
 
         Button button = new Button("st");
-        Button button1 = new Button("th");
+        Button button1 = new Button("nd");
         Button button2 = new Button("rd");
         Button button3 = new Button("th");
+        Button button4 = new Button("thh");
 
-        root.setSpacing(5);
-        root.setAlignment(Pos.BOTTOM_RIGHT);
-        root.setPadding(new Insets(10, 10, 10, 10));
-        root.setMargin(button,new Insets(10,10,10,10));
-        root.setMargin(button2,new Insets(30,10,25,10));
+        root.setCenter(button);
+        root.setBottom(button2);
+        root.setLeft(button3);
+        root.setRight(button4);
 
-        root.getChildren().addAll(button,button1,button2,button3);
+        BorderPane.setAlignment(button1,Pos.CENTER);
+        BorderPane.setAlignment(button3,Pos.TOP_LEFT);
+
+
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
