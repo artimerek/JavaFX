@@ -28,26 +28,29 @@ public class Main extends  Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-       stage.setTitle("Hyperlinki");
-       stage.setWidth(450);
-       stage.setHeight(500);
+      //CSS
 
-       VBox root = new VBox();
+        stage.setTitle("CSS");
+        stage.setHeight(500);
+        stage.setWidth(500);
 
-       Label text = new Label("Nie klikniete");
-       ImageView image = new ImageView("https://upload.wikimedia.org/wikipedia/commons/d/d6/AndrzejGrabowski.jpg");
-       Hyperlink link1 = new Hyperlink("Klikaj!",image);
-
-       link1.setOnAction(e ->{
-           text.setText("Klikniete!");
-       });
-       
-       root.getChildren().addAll(text,link1);
+        VBox root = new VBox();
+        root.getStylesheets().add("stylesheets/drugi.css");
 
 
-       Scene scene = new Scene(root);
-       stage.setScene(scene);
-       stage.show();
+        Label label1 = new Label("This is label with css.");
+        Label label2 = new Label("Drugi css");
+        label2.setId("drugi");
+
+        Hyperlink link = new Hyperlink("Click me!");
+        link.setStyle("-fx-background-color: azure; -fx-font-size: 15px");
+        root.getChildren().addAll(label1,label2,link);
+
+
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add("stylesheets/styles.css");
+        stage.setScene(scene);
+        stage.show();
 
     }
 

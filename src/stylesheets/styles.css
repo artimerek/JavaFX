@@ -1,0 +1,12 @@
+.root{
+    -fx-background-color: #deb887;
+    -fx-font-family: Calibri;
+    -fx-font-size: 25px;
+}
+.label{
+    -fx-background-color: crimson;
+}
+#drugi{
+    -fx-font-size: 60px;
+    -fx-background-color: burlywood;
+}
