@@ -3,6 +3,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,25 +31,28 @@ public class Main extends  Application {
 
       //CSS
 
-        stage.setTitle("CSS");
+        stage.setTitle("Buttons");
         stage.setHeight(500);
         stage.setWidth(500);
 
         VBox root = new VBox();
-        root.getStylesheets().add("stylesheets/drugi.css");
 
+        Button button = new Button("Klikaj");
+        button.setStyle("-fx-font-size: 55px");
+        button.setText("_Nope.Nope.Nope.Nope.Nope");
+        button.setWrapText(true);
 
-        Label label1 = new Label("This is label with css.");
-        Label label2 = new Label("Drugi css");
-        label2.setId("drugi");
+        button.setMinSize(5,5);
+        button.setPrefSize(250,250);
+        button.setMaxSize(500,500);
 
-        Hyperlink link = new Hyperlink("Click me!");
-        link.setStyle("-fx-background-color: azure; -fx-font-size: 15px");
-        root.getChildren().addAll(label1,label2,link);
+        button.setMnemonicParsing(true); //alt
+        button.setOnAction(e -> {
+            System.out.println("Klikniete");
+        });
 
-
+        root.getChildren().addAll(button);
         Scene scene = new Scene(root);
-        scene.getStylesheets().add("stylesheets/styles.css");
         stage.setScene(scene);
         stage.show();
 
