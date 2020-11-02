@@ -1,0 +1,10 @@
+.number-button{
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;
+
+}
+.actions_button{
+    -fx-font-size: 15px;
+    -fx-font-style: italic;
+
+}
