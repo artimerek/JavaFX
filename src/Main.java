@@ -1,23 +1,12 @@
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.scene.*;
-import javafx.scene.control.Label; // <- important for get child
+
 import java.awt.*;
-import javafx.scene.web.*;
-import org.w3c.dom.ls.LSOutput;
 
 public class Main extends  Application {
 
@@ -29,7 +18,7 @@ public class Main extends  Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-      //CSS
+      //Menu
 
         stage.setTitle("Buttons");
         stage.setHeight(500);
@@ -37,21 +26,30 @@ public class Main extends  Application {
 
         VBox root = new VBox();
 
-        Button button = new Button("Klikaj");
-        button.setStyle("-fx-font-size: 55px");
-        button.setText("_Nope.Nope.Nope.Nope.Nope");
-        button.setWrapText(true);
+        MenuItem item = new MenuItem("Ziemniak");
+        MenuItem item1 = new MenuItem("Kabel");
+        MenuItem item2 = new MenuItem("Cukier");
+        MenuItem item3 = new MenuItem("Pomidor");
 
-        button.setMinSize(5,5);
-        button.setPrefSize(250,250);
-        button.setMaxSize(500,500);
+        MenuButton menuButton = new MenuButton("Wybierz jedzonko",null,item,item1,item2,item3);
+        Label food = new Label("Nie wybrano żarcia");
 
-        button.setMnemonicParsing(true); //alt
-        button.setOnAction(e -> {
-            System.out.println("Klikniete");
+        item.setOnAction(e -> {
+            food.setText("Ziemniak");
+        });
+        item1.setOnAction(e -> {
+            food.setText("Kabel");
+        });
+        item2.setOnAction(e -> {
+            food.setText("Cukier");
+        });
+        item3.setOnAction(e -> {
+            food.setText("Pomidor");
         });
 
-        root.getChildren().addAll(button);
+
+
+        root.getChildren().addAll(menuButton,food);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
