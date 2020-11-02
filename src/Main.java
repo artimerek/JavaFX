@@ -1,12 +1,15 @@
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.control.Button;
 
-import java.awt.*;
 
 public class Main extends  Application {
 
@@ -23,20 +26,21 @@ public class Main extends  Application {
         stage.setHeight(500);
         stage.setWidth(500);
 
-        VBox root = new VBox();
+        HBox root = new HBox();
 
-        ToggleButton button = new ToggleButton("Blue");
-        ToggleButton button2 = new ToggleButton("Red");
-        ToggleButton button3 = new ToggleButton("Yellow");
-        ToggleGroup toggleGroup = new ToggleGroup();
-        button.setToggleGroup(toggleGroup);
-        button2.setToggleGroup(toggleGroup);
-        button3.setToggleGroup(toggleGroup);
 
-        RadioButton radioButton = new RadioButton("Pomarańczowy");
-        RadioButton radioButton1 = new RadioButton("Fioletowy");
+        Button button = new Button("st");
+        Button button1 = new Button("th");
+        Button button2 = new Button("rd");
+        Button button3 = new Button("th");
 
-        root.getChildren().addAll(button,button2,button3,radioButton,radioButton1);
+        root.setSpacing(5);
+        root.setAlignment(Pos.BOTTOM_RIGHT);
+        root.setPadding(new Insets(10, 10, 10, 10));
+        root.setMargin(button,new Insets(10,10,10,10));
+        root.setMargin(button2,new Insets(30,10,25,10));
+
+        root.getChildren().addAll(button,button1,button2,button3);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
