@@ -5,8 +5,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
@@ -27,23 +30,13 @@ public class Main extends  Application {
         stage.setWidth(400);
         stage.setHeight(400);
 
-        BorderPane root = new BorderPane();
+        //Label label = new Label("Elo420");
+        ImageView img = new ImageView("https://static-cdn.jtvnw.net/jtv_user_pictures/fximba-profile_image-8779ecca7c5d7fb1-300x300.png");
+        Button button = new Button("Click me hehe");
+        StackPane root = new StackPane(img,button);
 
-        root.setTop(new TextField("Góra"));
-
-        Button button = new Button("st");
-        Button button1 = new Button("nd");
-        Button button2 = new Button("rd");
-        Button button3 = new Button("th");
-        Button button4 = new Button("thh");
-
-        root.setCenter(button);
-        root.setBottom(button2);
-        root.setLeft(button3);
-        root.setRight(button4);
-
-        BorderPane.setAlignment(button1,Pos.CENTER);
-        BorderPane.setAlignment(button3,Pos.TOP_LEFT);
+//        StackPane.setAlignment(button,Pos.CENTER_LEFT);
+        StackPane.setMargin(button,new Insets(30));
 
 
         Scene scene = new Scene(root);
