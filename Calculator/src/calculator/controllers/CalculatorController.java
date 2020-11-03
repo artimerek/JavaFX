@@ -1,10 +1,17 @@
 package calculator.controllers;
 
+import calculator.Main;
 import calculator.utils.EvaluateString;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class CalculatorController {
 
@@ -13,6 +20,8 @@ public class CalculatorController {
 
     @FXML
     private Label result;
+
+    private ArrayList<String> calc_hist = new ArrayList<>();
 
     public void insertNumber(String number){
         
@@ -56,6 +65,26 @@ public class CalculatorController {
     public Label getResult() {
         return result;
     }
+    public void openHistoryWindow(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/calculator/resources/history.fxml"));
+            Parent root = loader.load();
+
+            Main.getHistoryStage().setScene(new Scene(root));
+
+            HistoryController historyController = loader.getController();
+            historyController.initliazeCalculation(calc_hist);
+
+            Main.getHistoryStage().show();
+        }
+        catch (IOException ex){
+            System.out.println(ex);
+        }
+
+    }
+    public void addCalc(String expression, String result){
+        this.calc_hist.add(expression + " = " + result);
+    }
 
     public void onMouseClick(MouseEvent mouseEvent) {
         
@@ -90,10 +119,11 @@ public class CalculatorController {
                 break;
             case "=":
                 double result = EvaluateString.evaluate(this.getExpression().getText());
+                addCalc(this.getExpression().getText(), String.valueOf(result));
                 setResult(String.valueOf(result));
                 break;
             case "Hist":
-                //openHistoryWindow();
+                openHistoryWindow();
                 break;
 
         }
