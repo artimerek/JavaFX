@@ -2,7 +2,6 @@ package calculator.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
-
 import java.util.ArrayList;
 
 public class HistoryController {

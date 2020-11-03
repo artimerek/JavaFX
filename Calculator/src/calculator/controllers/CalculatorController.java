@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -32,7 +31,6 @@ public class CalculatorController {
     public void insertOperator(String operator){
         expression.setText(expression.getText()+ " "+ operator +" ");
     }
-
     public void clearExpression(){
         expression.setText("");
         result.setText("");
@@ -109,6 +107,8 @@ public class CalculatorController {
             case"-":
             case"*":
             case"/":
+            case"^":
+            case"v":
                 insertOperator(buttonText);
                 break;
             case"Clear":

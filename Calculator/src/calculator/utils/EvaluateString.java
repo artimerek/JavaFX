@@ -71,7 +71,9 @@ public class EvaluateString
             else if (tokens[i] == '+' ||
                     tokens[i] == '-' ||
                     tokens[i] == '*' ||
-                    tokens[i] == '/')
+                    tokens[i] == '/' ||
+                    tokens[i] == '^' ||
+                    tokens[i] =='v')
             {
                 // While top of 'ops' has same
                 // or greater precedence to current
@@ -138,6 +140,10 @@ public class EvaluateString
                             UnsupportedOperationException(
                             "Cannot divide by zero");
                 return a / b;
+            case '^':
+                return (int)Math.pow(a,b);
+            case 'v':
+                return (int)Math.sqrt(a);
         }
         return 0;
     }}
