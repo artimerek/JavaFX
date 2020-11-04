@@ -12,7 +12,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -145,7 +144,6 @@ public class Main extends Application {
         for(int i = 1; i < snake.size(); i++){
             if(snake.get(0).x == snake.get(i).x&&snake.get(0).y==snake.get(i).y){
                 gameOver = true;
-
             }
         }
 
