@@ -22,7 +22,6 @@ public class Main extends Application {
 
         Scene scene = new Scene(stackPane);
 
-        primaryStage.initStyle(StageStyle.DECORATED);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Im so dumb");
         primaryStage.show();

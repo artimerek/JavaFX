@@ -1,35 +1,40 @@
 package basics.controllers;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.input.MouseEvent;
+
 
 public class Controller {
 
     @FXML
     private Button button;
 
-    @FXML
-    void initialize(){
-        button.setText("Initialize method");
+    public Controller(){
+        System.out.println("Kontrol");
     }
 
     @FXML
-    public void onActionButton(ActionEvent actionEvent) {
-        System.out.println("Atak! " + actionEvent.getSource());
-        if(actionEvent.getSource() instanceof CheckBox)
-            System.out.println("+1 Checkbox");
+    void initialize() {
+    button.setText("Nowa nazwa");
 
+    EventHandler<ActionEvent> handler = e -> {
+        System.out.println("Handler lambda1");
+    };
+    //lambdas hype
+
+    button.addEventHandler(ActionEvent.ACTION,handler);
+
+    EventHandler<MouseEvent> mouseHandlerLambda = a ->{
+        System.out.println("Handler lambda");
+    };
+
+    button.addEventHandler(MouseEvent.MOUSE_ENTERED,mouseHandlerLambda);
+
+    button.setOnAction(e -> {
+        System.out.println("Handler set on");
+    });
     }
-
-    @FXML
-    public void onMouseEnteredButton(MouseEvent mouseEvent) {
-        System.out.println("Obrona " + mouseEvent.getSource());
-        System.out.println(mouseEvent.getClickCount());
-
-
-    }
-
 }
