@@ -34,12 +34,27 @@ public class MenuScreenController {
 
     @FXML
     public void openOptions(ActionEvent actionEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/menu/resources/OptionsScreen.fxml"));
 
+        Pane pane = null;
+
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        OptionsScreenController optionsScreenController = loader.getController();
+        optionsScreenController.setMainScreenController(mainScreenController);
+        mainScreenController.setScreen(pane);
     }
 
     @FXML
     public void exit(ActionEvent actionEvent) {
         System.exit(1);
+
+    }
+
+    public void playSnake(ActionEvent actionEvent) {
 
     }
 }
