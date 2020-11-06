@@ -59,7 +59,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="120.0" prefWidth="128.0" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Button mnemonicParsing="false" prefHeight="120.0" prefWidth="128.0" text="Neg" GridPane.columnIndex="2" GridPane.rowIndex="4" />
             <Button mnemonicParsing="false" prefHeight="110.0" prefWidth="119.0" text="Button" GridPane.columnIndex="3" GridPane.rowIndex="4" />
             <Button mnemonicParsing="false" prefHeight="139.0" prefWidth="136.0" text="Button" GridPane.columnIndex="4" GridPane.rowIndex="4" />
          </children>

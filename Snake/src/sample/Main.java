@@ -21,7 +21,7 @@ public class Main extends Application {
 
     static int speed = 5;
     static int foodcolor = 0;
-    static int width = 20;
+    static int width = 20;  
     static int height = 20;
     static int foodX = 0;
     static int foodY = 0;

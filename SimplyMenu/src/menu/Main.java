@@ -21,9 +21,10 @@ public class Main extends Application{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/menu/resources/MainScreen.fxml"));
         StackPane stackPane = loader.load();
         Scene scene = new Scene(stackPane,500,500);
-
         stage.setTitle("Menu");
         stage.setScene(scene);
         stage.show();
     }
+
+
 }

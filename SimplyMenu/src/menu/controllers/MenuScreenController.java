@@ -54,7 +54,8 @@ public class MenuScreenController {
 
     }
 
-    public void playSnake(ActionEvent actionEvent) {
+    public void playSnake(ActionEvent actionEvent) throws Exception {
+
 
     }
 }
