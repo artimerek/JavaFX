@@ -33,5 +33,13 @@ public class Controller {
     @FXML
     private Button loginButton;
 
+    private PersonViewModel personViewModel = new PersonViewModel();
+
+    public void initialize()
+    {
+        nameTextField.textProperty().bindBidirectional(personViewModel.getNameProperty());
+
+    }
+
 
 }
