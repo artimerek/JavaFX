@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="404.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="properties.Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="187.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="properties.Controller">
    <padding>
       <Insets right="10.0" top="10.0" />
    </padding>
@@ -49,7 +49,7 @@
             </Label>
          </children>
       </HBox>
-      <HBox prefHeight="38.0" prefWidth="255.0" spacing="10.0">
+      <HBox prefHeight="36.0" prefWidth="370.0" spacing="10.0">
          <children>
             <Label text="Rok urodzenia">
                <padding>
@@ -58,7 +58,11 @@
             </Label>
             <TextField fx:id="yearTextField" prefHeight="25.0" prefWidth="65.0" />
             <CheckBox fx:id="confirmCheckBox" mnemonicParsing="false" text="Potwierdzam" />
-            <Label fx:id="ageLabel" text="Twój wiek to:" />
+            <Label fx:id="ageLabel" text="Twój wiek to:">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </Label>
          </children>
          <padding>
             <Insets top="10.0" />

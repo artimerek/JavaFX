@@ -1,6 +1,7 @@
 package properties;
 
 
+import javafx.beans.binding.When;
 import javafx.beans.property.*;
 
 import java.time.LocalDate;
@@ -27,7 +28,16 @@ public class PersonViewModel {
 
     private IntegerProperty actualYearProperty = new SimpleIntegerProperty(LocalDate.now().getYear());
 
+
+    //logic of the program
     public PersonViewModel(){
+        nameOkProperty.bind(nameProperty.isNotEmpty());
+        disableSurnameProperty.bind(nameProperty.isEmpty());
+        surnameOkProperty.bind(surnameProperty.isNotEmpty());
+        buttonProperty.bind(checkBoxOk.not());
+        ageProperty.bind(new When(yearProperty.isNotEqualTo(0))
+                .then(actualYearProperty.subtract(yearProperty).asString()).otherwise(""));
+
     }
 
     public BooleanProperty getButtonProperty() {
