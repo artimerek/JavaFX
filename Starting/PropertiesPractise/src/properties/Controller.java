@@ -1,28 +1,37 @@
 package properties;
 
-import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-
-
 
 public class Controller {
 
     @FXML
-    private TextField textField;
+    private TextField nameTextField;
 
     @FXML
-    private Label labelName;
-
-    private Person person = new Person();
+    private Label nameLabel;
 
     @FXML
-    public void initialize(){
-        textField.textProperty().bindBidirectional(person.getPropertyTextField());
-        labelName.textProperty().bind(person.getPropertyTextField());
-    }
+    private TextField surnameTextField;
 
-    public void write(ActionEvent actionEvent) {
-    }
+    @FXML
+    private Label surnameLabel;
+
+    @FXML
+    private  TextField yearTextField;
+
+    @FXML
+    private CheckBox confirmCheckBox;
+
+    @FXML
+    private Label ageLabel;
+
+    @FXML
+    private Button loginButton;
+
+
 }

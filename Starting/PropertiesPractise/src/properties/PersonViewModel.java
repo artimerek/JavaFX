@@ -3,7 +3,7 @@ package properties;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Person {
+public class PersonViewModel {
 
     private StringProperty propertyTextField = new SimpleStringProperty(this, "nameProperty", "Konradek");
 
