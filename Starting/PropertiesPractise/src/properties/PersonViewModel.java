@@ -25,7 +25,7 @@ public class PersonViewModel {
 
     private BooleanProperty buttonProperty = new SimpleBooleanProperty(false);
 
-    private IntegerProperty actuallYearProperty = new SimpleIntegerProperty(LocalDate.now().getYear());
+    private IntegerProperty actualYearProperty = new SimpleIntegerProperty(LocalDate.now().getYear());
 
     public PersonViewModel(){
     }
@@ -39,11 +39,11 @@ public class PersonViewModel {
     }
 
     public IntegerProperty getActualYearProperty() {
-        return actuallYearProperty;
+        return actualYearProperty;
     }
 
     public void setActualYearProperty(IntegerProperty actualYearProperty) {
-        this.actuallYearProperty = actualYearProperty;
+        this.actualYearProperty = actualYearProperty;
     }
 
     public BooleanProperty getDisableSurnameProperty() {
