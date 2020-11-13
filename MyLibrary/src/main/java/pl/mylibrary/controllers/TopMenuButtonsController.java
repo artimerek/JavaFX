@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 
 public class TopMenuButtonsController {
 
+    private MainController mainController;
+
     @FXML
     public void openLibrary() {
     }
@@ -15,5 +17,9 @@ public class TopMenuButtonsController {
 
     @FXML
     public void openStats() {
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 }
