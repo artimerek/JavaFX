@@ -15,26 +15,26 @@
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <MenuBar>
            <menus>
-             <Menu mnemonicParsing="false" text="Plik">
+             <Menu mnemonicParsing="false" text="%file">
                <items>
-                 <MenuItem mnemonicParsing="false" text="Zamknij" />
+                 <MenuItem mnemonicParsing="false" onAction="#closeApplication" text="%close" />
                </items>
              </Menu>
-             <Menu mnemonicParsing="false" text="Edycja">
+             <Menu mnemonicParsing="false" text="%edit">
                   <items>
-                     <RadioMenuItem mnemonicParsing="false" text="Caspian">
+                     <RadioMenuItem mnemonicParsing="false" onAction="#setCaspian" text="%caspian">
                         <toggleGroup>
                            <ToggleGroup fx:id="styleGroup" />
                         </toggleGroup>
                      </RadioMenuItem>
-                     <RadioMenuItem mnemonicParsing="false" text="Modena" toggleGroup="$styleGroup" />
+                     <RadioMenuItem mnemonicParsing="false" onAction="#setModena" selected="true" text="%modena" toggleGroup="$styleGroup" />
                      <SeparatorMenuItem mnemonicParsing="false" />
-                     <CheckMenuItem mnemonicParsing="false" text="Zawsze na wierzchu" />
+                     <CheckMenuItem mnemonicParsing="false" onAction="#setalwaysOnTop" text="%alwaysOnTop" />
                   </items>
              </Menu>
-             <Menu mnemonicParsing="false" text="Pomoc">
+             <Menu mnemonicParsing="false" text="%help">
                <items>
-                     <MenuItem mnemonicParsing="false" text="O aplikacji" />
+                     <MenuItem mnemonicParsing="false" onAction="#about" text="%about" />
                </items>
              </Menu>
            </menus>

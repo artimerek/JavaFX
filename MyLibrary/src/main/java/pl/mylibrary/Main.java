@@ -16,7 +16,7 @@ public class Main extends Application {
     }
 
     public void start(Stage stage) throws Exception {
-        //Locale.setDefault(new Locale("en"));
+//        Locale.setDefault(new Locale("en"));
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/BorderPaneMain.fxml"));
         ResourceBundle bundle = ResourceBundle.getBundle("bundles.messages");
         loader.setResources(bundle);
