@@ -10,7 +10,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import pl.mylibrary.dialogs.DialogUtils;
+import pl.mylibrary.utils.DialogUtils;
+import pl.mylibrary.utils.FxmlUtils;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -30,16 +31,7 @@ public class MainController {
     }
 
     public void setCenter(String fxmlPatch){
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource(fxmlPatch));
-        ResourceBundle bundle = ResourceBundle.getBundle("bundles.messages");
-        loader.setResources(bundle);
-        Parent parent = null;
-        try {
-            parent = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        borderPane.setCenter(parent);
+        borderPane.setCenter(FxmlUtils.fxmlLoader(fxmlPatch));
     }
 
     public void closeApplication() {

@@ -1,4 +1,4 @@
-package pl.mylibrary.dialogs;
+package pl.mylibrary.utils;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 
 public class DialogUtils {
 
-    static ResourceBundle bundle = ResourceBundle.getBundle("bundles.messages");
+    static ResourceBundle bundle = FxmlUtils.getResourceBundle();
 
     public static void dialogAboutApplication(){
         Alert informationAlert = new Alert(Alert.AlertType.INFORMATION);
