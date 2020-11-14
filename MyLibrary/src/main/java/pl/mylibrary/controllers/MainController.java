@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import pl.mylibrary.dialogs.DialogUtils;
 
 import java.io.IOException;
 import java.util.ResourceBundle;
@@ -59,5 +60,6 @@ public class MainController {
     }
 
     public void about(ActionEvent actionEvent) {
+        DialogUtils.dialogAboutApplication();
     }
 }
