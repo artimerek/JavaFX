@@ -2,6 +2,7 @@ package pl.mylibrary.utils;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextArea;
 
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -23,5 +24,16 @@ public class DialogUtils {
         confirmationDialog.setHeaderText(bundle.getString("exit.header"));
         Optional<ButtonType> result = confirmationDialog.showAndWait();
         return result;
+    }
+
+    public static void errorDialog(String error){
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+        errorAlert.setTitle(bundle.getString("error.title"));
+        errorAlert.setHeaderText(bundle.getString("error.header"));
+
+        TextArea textArea = new TextArea(error);
+        errorAlert.getDialogPane().setContent(textArea);
+        errorAlert.getDialogPane().setContent(FxmlUtils.fxmlLoader("/fxml/BorderPaneMain.fxml"));
+        errorAlert.showAndWait();
     }
 }
