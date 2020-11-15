@@ -1,0 +1,5 @@
+pl\mylibrary\controllers\MainController.class
+pl\mylibrary\controllers\TopMenuButtonsController.class
+pl\mylibrary\Main.class
+pl\mylibrary\utils\FxmlUtils.class
+pl\mylibrary\utils\DialogUtils.class
