@@ -8,6 +8,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import todoproject.data.Items;
+import todoproject.data.ItemsData;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -26,20 +27,6 @@ public class Controller {
 
     @FXML
     public void initialize(){
-        // some data for tests
-        Items item1 = new Items(LocalDate.of(2021,8,31),"Birthday Party",
-                "Prepare a cake, buy some drinks etc");
-        Items item2 = new Items(LocalDate.of(2019,8,31),"Birthday Party",
-                "Prepare a cake, buy some drinks etc");
-        Items item3 = new Items(LocalDate.of(2018,8,31),"Birthday Party",
-                "Prepare a cake, buy some drinks etc");
-        // init arraylist with type of items
-        this.itemsTodo = new ArrayList<Items>();
-
-        itemsTodo.add(item1);
-        itemsTodo.add(item2);
-        itemsTodo.add(item3);
-
         listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Items>() {
             @Override
             public void changed(ObservableValue<? extends Items> observableValue, Items items, Items t1) {
@@ -52,7 +39,7 @@ public class Controller {
             }
         });
 
-        listView.getItems().setAll(itemsTodo);
+        listView.getItems().setAll(ItemsData.getInstance().getItems());
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);  // only 1 item can be selected at a time
         listView.getSelectionModel().selectFirst(); // display first by the default
     }
