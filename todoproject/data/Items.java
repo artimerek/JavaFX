@@ -36,4 +36,9 @@ public class Items {
     public void setFullDescription(String fullDescription) {
         this.fullDescription = fullDescription;
     }
+
+    @Override
+    public String toString() {
+        return shortDescription;
+    }
 }
