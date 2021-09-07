@@ -1,8 +1,8 @@
 package pl.artimerek.model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Datasource {
     //  Constants for DB connection, tables etc.
@@ -55,4 +55,25 @@ public class Datasource {
         }
     }
 
+
+    // try with resources helps with closing
+    public List<Artist> queryArtists(){
+        try(Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM " + TABLE_ARTISTS)){
+            List<Artist> artists = new ArrayList<>();
+            while(resultSet.next()){
+                Artist artist = new Artist();
+                artist.setId(resultSet.getInt(COLUMN_ARTIST_ID));
+                artist.setName(resultSet.getString(COLUMN_ARTIST_NAME));
+                artists.add(artist);
+            }
+
+            return artists;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            System.out.println(throwables.getMessage());
+            return null;
+        }
+    }
 }
