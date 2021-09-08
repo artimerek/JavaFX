@@ -16,9 +16,15 @@ public class Main {
             return;
         }
 
-        List<Artist> artists = datasource.queryArtists();
-        for (Artist artist : artists){
-            System.out.println(artist.getId() + " " + artist.getName());
+        List<Artist> artists = datasource.queryArtists(Datasource.ORDER_BY_NONE);
+//        for (Artist artist : artists){
+//            System.out.println(artist.getId() + " " + artist.getName());
+//        }
+
+        List<String> albums = datasource.queryAlbumsForArtists("Iron Maiden",1);
+        System.out.println("Artist: " + "Carole King\nAlbums: ");
+        for (String album : albums){
+            System.out.println(album);
         }
 
         datasource.closeConnection();
