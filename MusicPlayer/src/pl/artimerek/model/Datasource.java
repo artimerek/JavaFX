@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//  Singleton class
 public class Datasource {
     //  Constants for DB connection, tables etc.
     public static final String DATABASE_NAME = "music.db";
@@ -112,7 +113,6 @@ public class Datasource {
 
     //  Prepared Statements to avoid sql inj attacks
 
-
     // View
     private PreparedStatement querySongInfoView;
 
@@ -124,6 +124,19 @@ public class Datasource {
     // Checking tables id's
     private PreparedStatement queryArtist;
     private PreparedStatement queryAlbum;
+
+    //  Singleton static instance
+    private static Datasource instance = new Datasource();
+
+    //  Singleton class constructor, only Datasource class will be able to construct instance
+    private Datasource() {
+
+    }
+
+    //  When object wants to use instance he have to call getInstance() method.
+    public static Datasource getInstance() {
+        return instance;
+    }
 
     public boolean openConnection() {
         try {
@@ -148,22 +161,22 @@ public class Datasource {
 
     public void closeConnection() {
         try {
-            if(querySongInfoView != null){
+            if (querySongInfoView != null) {
                 querySongInfoView.close();
             }
-            if (insertArtist != null){
+            if (insertArtist != null) {
                 insertArtist.close();
             }
-            if (insertAlbums != null){
+            if (insertAlbums != null) {
                 insertAlbums.close();
             }
-            if (insertSongs != null){
+            if (insertSongs != null) {
                 insertSongs.close();
             }
-            if(queryArtist != null){
+            if (queryArtist != null) {
                 queryArtist.close();
             }
-            if(queryAlbum != null){
+            if (queryAlbum != null) {
                 queryAlbum.close();
             }
             if (connection != null) {
@@ -276,7 +289,7 @@ public class Datasource {
             return -1;
         }
     }
-    
+
 
     public boolean createViewForSongArtists() {
         try (Statement statement = connection.createStatement()) {
@@ -293,20 +306,20 @@ public class Datasource {
     private int insertArtist(String name) throws SQLException {
         queryArtist.setString(1, name);
         ResultSet resultSet = queryArtist.executeQuery();
-        if(resultSet.next()){
+        if (resultSet.next()) {
             return resultSet.getInt(1);
-        }else {
+        } else {
             insertArtist.setString(1, name);
-            int affectedRows =  insertArtist.executeUpdate();
+            int affectedRows = insertArtist.executeUpdate();
 
-            if(affectedRows != 1){
+            if (affectedRows != 1) {
                 throw new SQLException("Problem with inserting artist");
             }
 
             ResultSet generatedKey = insertArtist.getGeneratedKeys();
-            if(generatedKey.next()){
+            if (generatedKey.next()) {
                 return generatedKey.getInt(1);
-            }else {
+            } else {
                 throw new SQLException("Problem with getting id for artist");
             }
         }
@@ -316,21 +329,21 @@ public class Datasource {
     private int insertAlbum(String name, int artistId) throws SQLException {
         queryAlbum.setString(1, name);
         ResultSet resultSet = queryAlbum.executeQuery();
-        if(resultSet.next()){
+        if (resultSet.next()) {
             return resultSet.getInt(1);
-        }else {
+        } else {
             insertAlbums.setString(1, name);
             insertAlbums.setInt(2, artistId);
-            int affectedRows =  insertAlbums.executeUpdate();
+            int affectedRows = insertAlbums.executeUpdate();
 
-            if(affectedRows != 1){
+            if (affectedRows != 1) {
                 throw new SQLException("Problem with inserting album");
             }
 
             ResultSet generatedKey = insertAlbums.getGeneratedKeys();
-            if(generatedKey.next()){
+            if (generatedKey.next()) {
                 return generatedKey.getInt(1);
-            }else {
+            } else {
                 throw new SQLException("Problem with getting id for album");
             }
         }
@@ -338,7 +351,7 @@ public class Datasource {
 
     // Transaction test
     public void insertSong(String name, String artistName, String albumName, int track) {
-        try{
+        try {
             connection.setAutoCommit(false);
 
             int artistId = insertArtist(artistName);
@@ -346,25 +359,25 @@ public class Datasource {
             insertSongs.setInt(1, track);
             insertSongs.setString(2, name);
             insertSongs.setInt(3, albumId);
-            int affectedRows =  insertSongs.executeUpdate();
-            if(affectedRows == 1){
+            int affectedRows = insertSongs.executeUpdate();
+            if (affectedRows == 1) {
                 connection.commit();
-            }else {
+            } else {
                 throw new SQLException("Problem with inserting song");
             }
 
-        }catch (Exception throwables){
+        } catch (Exception throwables) {
             System.out.println(throwables.getMessage());
             throwables.printStackTrace();
-            try{
+            try {
                 connection.rollback();
-            }catch (SQLException throwables1){
+            } catch (SQLException throwables1) {
                 System.out.println(throwables1.getMessage());
             }
-        }finally {
-            try{
+        } finally {
+            try {
                 connection.setAutoCommit(true);
-            }catch (SQLException throwables){
+            } catch (SQLException throwables) {
                 System.out.println(throwables.getMessage());
             }
         }
