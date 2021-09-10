@@ -410,7 +410,7 @@ public class Datasource {
                 throw new SQLException("Problem with inserting song");
             }
 
-        }catch (SQLException throwables){
+        }catch (Exception throwables){
             System.out.println(throwables.getMessage());
             throwables.printStackTrace();
             try{
