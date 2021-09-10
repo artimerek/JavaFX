@@ -92,14 +92,13 @@ public class Datasource {
     // Inserting
 
     public static final String INSERT_ARTIST = "INSERT INTO " + TABLE_ARTISTS +
-            '(' + COLUMN_ARTIST_NAME + ") VALUES (?)";
-
+            '(' + COLUMN_ARTIST_NAME + ") VALUES(?)";
     public static final String INSERT_ALBUMS = "INSERT INTO " + TABLE_ALBUMS +
-            '(' + COLUMN_ALBUM_NAME + ", " + COLUMN_ALBUM_ARTIST + ") VALUES (?, ?)";
+            '(' + COLUMN_ALBUM_NAME + ", " + COLUMN_ALBUM_ARTIST + ") VALUES(?, ?)";
 
     public static final String INSERT_SONGS = "INSERT INTO " + TABLE_SONGS +
             '(' + COLUMN_SONG_TRACK + ", " + COLUMN_SONG_TITLE + ", " + COLUMN_SONG_ALBUM +
-            ") VALUES (?, ?, ?)";
+            ") VALUES(?, ?, ?)";
 
     public static final String QUERY_ARTIST = "SELECT " + COLUMN_ARTIST_ID + " FROM " +
             TABLE_ARTISTS + " WHERE " + COLUMN_ARTIST_NAME + " = ?";
@@ -133,7 +132,7 @@ public class Datasource {
             querySongInfoView = connection.prepareStatement(QUERY_VIEW_SONG_INFO_PREP);
             insertArtist = connection.prepareStatement(INSERT_ARTIST, Statement.RETURN_GENERATED_KEYS);
             insertAlbums = connection.prepareStatement(INSERT_ALBUMS, Statement.RETURN_GENERATED_KEYS);
-            insertSongs = connection.prepareStatement(INSERT_SONGS, Statement.RETURN_GENERATED_KEYS);
+            insertSongs = connection.prepareStatement(INSERT_SONGS);
             queryArtist = connection.prepareStatement(QUERY_ARTIST);
             queryAlbum = connection.prepareStatement(QUERY_ALBUM);
             return true;
@@ -165,7 +164,7 @@ public class Datasource {
                 queryArtist.close();
             }
             if(queryAlbum != null){
-                queryArtist.close();
+                queryAlbum.close();
             }
             if (connection != null) {
                 connection.close();
@@ -379,7 +378,7 @@ public class Datasource {
         }else {
             insertAlbums.setString(1, name);
             insertAlbums.setInt(2, artistId);
-            int affectedRows =  insertArtist.executeUpdate();
+            int affectedRows =  insertAlbums.executeUpdate();
 
             if(affectedRows != 1){
                 throw new SQLException("Problem with inserting album");
@@ -395,7 +394,7 @@ public class Datasource {
     }
 
     // Transaction test
-    private int insertSong(String name, String artistName, String albumName, int track) {
+    public void insertSong(String name, String artistName, String albumName, int track) {
         try{
             connection.setAutoCommit(false);
 
@@ -410,6 +409,7 @@ public class Datasource {
             }else {
                 throw new SQLException("Problem with inserting song");
             }
+
         }catch (SQLException throwables){
             System.out.println(throwables.getMessage());
             throwables.printStackTrace();

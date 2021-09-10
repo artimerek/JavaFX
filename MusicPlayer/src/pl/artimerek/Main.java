@@ -48,6 +48,8 @@ public class Main {
                     " Track no." + artist.getTrack());
         }
 
+        datasource.insertSong("Baby","Justin Bieber", "Nono", 1);
+
         datasource.closeConnection();
     }
 }
