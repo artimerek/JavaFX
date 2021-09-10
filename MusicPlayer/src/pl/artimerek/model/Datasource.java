@@ -89,19 +89,53 @@ public class Datasource {
             COLUMN_SONG_ALBUM + ", " + COLUMN_SONG_TRACK + " FROM " + TABLE_ARTIST_SONG_VIEW +
             " WHERE " + COLUMN_SONG_TITLE + " = ?";
 
-    // Connection
+    // Inserting
 
-    //Prepared Statement to avoid sql inj attacks
+    public static final String INSERT_ARTIST = "INSERT INTO " + TABLE_ARTISTS +
+            '(' + COLUMN_ARTIST_NAME + ") VALUES (?)";
+
+    public static final String INSERT_ALBUMS = "INSERT INTO " + TABLE_ALBUMS +
+            '(' + COLUMN_ALBUM_NAME + ", " + COLUMN_ALBUM_ARTIST + ") VALUES (?, ?)";
+
+    public static final String INSERT_SONGS = "INSERT INTO " + TABLE_SONGS +
+            '(' + COLUMN_SONG_TRACK + ", " + COLUMN_SONG_TITLE + ", " + COLUMN_SONG_ALBUM +
+            ") VALUES (?, ?, ?)";
+
+    public static final String QUERY_ARTIST = "SELECT " + COLUMN_ARTIST_ID + " FROM " +
+            TABLE_ARTISTS + " WHERE " + COLUMN_ARTIST_NAME + " = ?";
+
+    public static final String QUERY_ALBUM = "SELECT " + COLUMN_ALBUM_ID + " FROM " +
+            TABLE_ALBUMS + " WHERE " + COLUMN_ALBUM_NAME + " = ?";
+
+    // Connection
 
     private Connection connection;
 
+    //  Prepared Statements to avoid sql inj attacks
+
+
+    // View
     private PreparedStatement querySongInfoView;
+
+    // Inserting records
+    private PreparedStatement insertArtist;
+    private PreparedStatement insertAlbums;
+    private PreparedStatement insertSongs;
+
+    // Checking tables id's
+    private PreparedStatement queryArtist;
+    private PreparedStatement queryAlbum;
 
     public boolean openConnection() {
         try {
             connection = DriverManager.getConnection(CONNECTION);
             System.out.println("Connection opened");
             querySongInfoView = connection.prepareStatement(QUERY_VIEW_SONG_INFO_PREP);
+            insertArtist = connection.prepareStatement(INSERT_ARTIST, Statement.RETURN_GENERATED_KEYS);
+            insertAlbums = connection.prepareStatement(INSERT_ALBUMS, Statement.RETURN_GENERATED_KEYS);
+            insertSongs = connection.prepareStatement(INSERT_SONGS, Statement.RETURN_GENERATED_KEYS);
+            queryArtist = connection.prepareStatement(QUERY_ARTIST);
+            queryAlbum = connection.prepareStatement(QUERY_ALBUM);
             return true;
         } catch (SQLException throwables) {
             System.out.println("Can't connect to db");
@@ -117,6 +151,21 @@ public class Datasource {
         try {
             if(querySongInfoView != null){
                 querySongInfoView.close();
+            }
+            if (insertArtist != null){
+                insertArtist.close();
+            }
+            if (insertAlbums != null){
+                insertAlbums.close();
+            }
+            if (insertSongs != null){
+                insertSongs.close();
+            }
+            if(queryArtist != null){
+                queryArtist.close();
+            }
+            if(queryAlbum != null){
+                queryArtist.close();
             }
             if (connection != null) {
                 connection.close();
@@ -251,7 +300,6 @@ public class Datasource {
     }
 
     // Simply method for retrieve amount of records in given table name
-
     public int getCount(String table) {
         String sql = "SELECT COUNT(*) AS count, MIN(_id) AS min_id FROM " + table;
         try (Statement statement = connection.createStatement();
@@ -295,6 +343,87 @@ public class Datasource {
         } catch (SQLException throwables) {
             System.out.println(throwables.getMessage());
             return false;
+        }
+    }
+
+
+    // User should pass name of wanted artist, if this artist isn't exist method will insert him
+    private int insertArtist(String name) throws SQLException {
+        queryArtist.setString(1, name);
+        ResultSet resultSet = queryArtist.executeQuery();
+        if(resultSet.next()){
+            return resultSet.getInt(1);
+        }else {
+            insertArtist.setString(1, name);
+            int affectedRows =  insertArtist.executeUpdate();
+
+            if(affectedRows != 1){
+                throw new SQLException("Problem with inserting artist");
+            }
+
+            ResultSet generatedKey = insertArtist.getGeneratedKeys();
+            if(generatedKey.next()){
+                return generatedKey.getInt(1);
+            }else {
+                throw new SQLException("Problem with getting id for artist");
+            }
+        }
+    }
+
+    // Similar method to method above but for inserting albums
+    private int insertAlbum(String name, int artistId) throws SQLException {
+        queryAlbum.setString(1, name);
+        ResultSet resultSet = queryAlbum.executeQuery();
+        if(resultSet.next()){
+            return resultSet.getInt(1);
+        }else {
+            insertAlbums.setString(1, name);
+            insertAlbums.setInt(2, artistId);
+            int affectedRows =  insertArtist.executeUpdate();
+
+            if(affectedRows != 1){
+                throw new SQLException("Problem with inserting album");
+            }
+
+            ResultSet generatedKey = insertAlbums.getGeneratedKeys();
+            if(generatedKey.next()){
+                return generatedKey.getInt(1);
+            }else {
+                throw new SQLException("Problem with getting id for album");
+            }
+        }
+    }
+
+    // Transaction test
+    private int insertSong(String name, String artistName, String albumName, int track) {
+        try{
+            connection.setAutoCommit(false);
+
+            int artistId = insertArtist(artistName);
+            int albumId = insertAlbum(albumName, artistId);
+            insertSongs.setInt(1, track);
+            insertSongs.setString(2, name);
+            insertSongs.setInt(3, albumId);
+            int affectedRows =  insertSongs.executeUpdate();
+            if(affectedRows == 1){
+                connection.commit();
+            }else {
+                throw new SQLException("Problem with inserting song");
+            }
+        }catch (SQLException throwables){
+            System.out.println(throwables.getMessage());
+            throwables.printStackTrace();
+            try{
+                connection.rollback();
+            }catch (SQLException throwables1){
+                System.out.println(throwables1.getMessage());
+            }
+        }finally {
+            try{
+                connection.setAutoCommit(true);
+            }catch (SQLException throwables){
+                System.out.println(throwables.getMessage());
+            }
         }
     }
 }
