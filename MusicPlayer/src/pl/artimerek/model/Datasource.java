@@ -244,42 +244,6 @@ public class Datasource {
         }
     }
 
-    public List<SongArtist> queryArtistForSong(String songName, int sortOrder) {
-        StringBuilder stringBuilder = new StringBuilder(QUERY_ARTIST_FOR_SONG_START);
-        stringBuilder.append(songName);
-        stringBuilder.append("\"");
-
-        if (sortOrder != ORDER_BY_NONE) {
-            stringBuilder.append(QUERY_ARTIST_FOR_SONG_SORT);
-            if (sortOrder == ORDER_BY_DESC) {
-                stringBuilder.append("DESC");
-            } else {
-                stringBuilder.append("ASC");
-            }
-        }
-
-        System.out.println(stringBuilder.toString());
-
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(stringBuilder.toString())) {
-
-            List<SongArtist> songArtists = new ArrayList<>();
-
-            while (resultSet.next()) {
-                SongArtist songArtist = new SongArtist();
-                songArtist.setArtistName(resultSet.getString(1));
-                songArtist.setAlbumName(resultSet.getString(2));
-                songArtist.setTrack(resultSet.getInt(3));
-                songArtists.add(songArtist);
-            }
-
-            return songArtists;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            System.out.println(throwables.getMessage());
-            return null;
-        }
-    }
 
     // info about rows, columns etc
     public void querySongsMetadata() {
@@ -312,28 +276,7 @@ public class Datasource {
             return -1;
         }
     }
-
-    public List<SongArtist> querySongInfoView(String title) {
-
-        try {
-            querySongInfoView.setString(1, title);
-            ResultSet resultSet = querySongInfoView.executeQuery();
-
-            List<SongArtist> songArtists = new ArrayList<>();
-            while (resultSet.next()) {
-                SongArtist songArtist = new SongArtist();
-                songArtist.setArtistName(resultSet.getString(1));
-                songArtist.setAlbumName(resultSet.getString(2));
-                songArtist.setTrack(resultSet.getInt(3));
-                songArtists.add(songArtist);
-            }
-            return songArtists;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            System.out.println(throwables.getMessage());
-            return null;
-        }
-    }
+    
 
     public boolean createViewForSongArtists() {
         try (Statement statement = connection.createStatement()) {
