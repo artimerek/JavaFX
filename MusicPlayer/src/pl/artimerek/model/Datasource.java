@@ -220,6 +220,12 @@ public class Datasource {
              ResultSet resultSet = statement.executeQuery(stringBuilder.toString())) {
             List<Artist> artists = new ArrayList<>();
             while (resultSet.next()) {
+                //  Just for progressbar animation XD
+                try{
+                    Thread.sleep(20);
+                }catch (InterruptedException e){
+                    System.out.println(e.getMessage());
+                }
                 Artist artist = new Artist();
                 artist.setId(resultSet.getInt(INDEX_ARTIST_ID));
                 artist.setName(resultSet.getString(INDEX_ARTIST_NAME));
@@ -332,7 +338,7 @@ public class Datasource {
 
 
     // User should pass name of wanted artist, if this artist isn't exist method will insert him
-    private int insertArtist(String name) throws SQLException {
+    public int insertArtist(String name) throws SQLException {
         queryArtist.setString(1, name);
         ResultSet resultSet = queryArtist.executeQuery();
         if (resultSet.next()) {
