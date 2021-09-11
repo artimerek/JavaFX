@@ -28,6 +28,27 @@ public class Controller {
     private BorderPane mainBorderPane;
 
 
+    @FXML
+    public void updateArtist(){
+        final Artist artist = (Artist) artistTableView.getItems().get(2);
+        Task<Boolean> task = new Task<Boolean>() {
+            @Override
+            protected Boolean call() throws Exception {
+                return Datasource.getInstance().updateArtistName(artist.getId(), "AC/DC");
+            }
+        };
+
+        task.setOnSucceeded(e -> {
+            if (task.valueProperty().get()) {
+                artist.setName("AC/DC");
+                artistTableView.refresh();
+            }
+        });
+
+        new Thread(task).start();
+    }
+
+    @FXML
     public void addArtist() throws SQLException {
         showAddArtistDialog();
     }
@@ -52,6 +73,15 @@ public class Controller {
             controller.processResults();
             System.out.println("OK pressed");
         }
+
+        Task<ObservableList<Artist>> task = new GetAllArtistTask();
+        artistTableView.itemsProperty().bind(task.valueProperty());
+        progressBar.progressProperty().bind(task.progressProperty());
+        progressBar.setVisible(true);
+
+        task.setOnSucceeded(e -> progressBar.setVisible(false));
+        task.setOnFailed(e -> progressBar.setVisible(false));
+        new Thread(task).start();
     }
 
     @FXML

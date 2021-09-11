@@ -110,6 +110,9 @@ public class Datasource {
     public static final String QUERY_ALBUMS_BY_ARTIST_ID = "SELECT * FROM " + TABLE_ALBUMS +
             " WHERE " + COLUMN_ALBUM_ARTIST + " = ? ORDER BY " + COLUMN_ALBUM_NAME + " COLLATE NOCASE";
 
+    public static final String UPDATE_ARTIST_NAME = "UPDATE " + TABLE_ARTISTS + " SET " +
+            COLUMN_ARTIST_NAME + " = ? WHERE " + COLUMN_ARTIST_ID + " =?";
+
     // Connection
 
     private Connection connection;
@@ -128,6 +131,9 @@ public class Datasource {
     private PreparedStatement queryArtist;
     private PreparedStatement queryAlbum;
     private PreparedStatement queryAlbumsByArtistId;
+
+    //  Updating records
+    private PreparedStatement updateArtistName;
 
     //  Singleton static instance
     private static Datasource instance = new Datasource();
@@ -153,6 +159,7 @@ public class Datasource {
             queryArtist = connection.prepareStatement(QUERY_ARTIST);
             queryAlbum = connection.prepareStatement(QUERY_ALBUM);
             queryAlbumsByArtistId = connection.prepareStatement(QUERY_ALBUMS_BY_ARTIST_ID);
+            updateArtistName = connection.prepareStatement(UPDATE_ARTIST_NAME);
             return true;
         } catch (SQLException throwables) {
             System.out.println("Can't connect to db");
@@ -166,28 +173,31 @@ public class Datasource {
 
     public void closeConnection() {
         try {
-            if (querySongInfoView != null) {
+            if(querySongInfoView != null) {
                 querySongInfoView.close();
             }
-            if (insertArtist != null) {
+            if(insertArtist != null) {
                 insertArtist.close();
             }
-            if (insertAlbums != null) {
+            if(insertAlbums != null) {
                 insertAlbums.close();
             }
-            if (insertSongs != null) {
+            if(insertSongs != null) {
                 insertSongs.close();
             }
-            if (queryArtist != null) {
+            if(queryArtist != null) {
                 queryArtist.close();
             }
-            if (queryAlbum != null) {
+            if(queryAlbum != null) {
                 queryAlbum.close();
             }
-            if  (queryAlbumsByArtistId != null){
+            if(queryAlbumsByArtistId != null){
                 queryAlbumsByArtistId.close();
             }
-            if (connection != null) {
+            if(updateArtistName != null){
+                updateArtistName.close();
+            }
+            if(connection != null) {
                 connection.close();
             }
         } catch (SQLException throwables) {
@@ -336,6 +346,18 @@ public class Datasource {
         }
     }
 
+    public boolean updateArtistName(int id, String newName){
+        try{
+            updateArtistName.setString(1, newName);
+            updateArtistName.setInt(2, id);
+            int affectedRecords = updateArtistName.executeUpdate();
+
+            return affectedRecords == 1;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+    }
 
     // User should pass name of wanted artist, if this artist isn't exist method will insert him
     public int insertArtist(String name) throws SQLException {
