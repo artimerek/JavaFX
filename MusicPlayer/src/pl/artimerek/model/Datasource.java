@@ -107,6 +107,9 @@ public class Datasource {
     public static final String QUERY_ALBUM = "SELECT " + COLUMN_ALBUM_ID + " FROM " +
             TABLE_ALBUMS + " WHERE " + COLUMN_ALBUM_NAME + " = ?";
 
+    public static final String QUERY_ALBUMS_BY_ARTIST_ID = "SELECT * FROM " + TABLE_ALBUMS +
+            " WHERE " + COLUMN_ALBUM_ARTIST + " = ? ORDER BY " + COLUMN_ALBUM_NAME + " COLLATE NOCASE";
+
     // Connection
 
     private Connection connection;
@@ -124,6 +127,7 @@ public class Datasource {
     // Checking tables id's
     private PreparedStatement queryArtist;
     private PreparedStatement queryAlbum;
+    private PreparedStatement queryAlbumsByArtistId;
 
     //  Singleton static instance
     private static Datasource instance = new Datasource();
@@ -148,6 +152,7 @@ public class Datasource {
             insertSongs = connection.prepareStatement(INSERT_SONGS);
             queryArtist = connection.prepareStatement(QUERY_ARTIST);
             queryAlbum = connection.prepareStatement(QUERY_ALBUM);
+            queryAlbumsByArtistId = connection.prepareStatement(QUERY_ALBUMS_BY_ARTIST_ID);
             return true;
         } catch (SQLException throwables) {
             System.out.println("Can't connect to db");
@@ -178,6 +183,9 @@ public class Datasource {
             }
             if (queryAlbum != null) {
                 queryAlbum.close();
+            }
+            if  (queryAlbumsByArtistId != null){
+                queryAlbumsByArtistId.close();
             }
             if (connection != null) {
                 connection.close();
@@ -223,6 +231,27 @@ public class Datasource {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             System.out.println(throwables.getMessage());
+            return null;
+        }
+    }
+
+    public List<Album> queryAlbumForArtistId(int id){
+        try{
+            queryAlbumsByArtistId.setInt(1, id);
+            ResultSet resultSet = queryAlbumsByArtistId.executeQuery();
+
+            List<Album> albums = new ArrayList<>();
+            while (resultSet.next()){
+                Album album = new Album();
+                album.setId(resultSet.getInt(1));
+                album.setName(resultSet.getString(2));
+                album.setArtistId(resultSet.getInt(3));
+                albums.add(album);
+            }
+            return albums;
+        } catch (SQLException throwables) {
+            System.out.println(throwables.getMessage());
+            throwables.printStackTrace();
             return null;
         }
     }

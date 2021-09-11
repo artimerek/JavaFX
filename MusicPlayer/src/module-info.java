@@ -4,4 +4,5 @@ module GUIProject {
     requires java.sql;
 
     opens pl.artimerek;
+    opens pl.artimerek.model;
 }
